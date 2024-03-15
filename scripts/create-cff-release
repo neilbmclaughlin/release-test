@@ -39,6 +39,7 @@ git add "$RELEASE_NOTES_FILE" package.json package-lock.json
 git commit -m "Add release notes and bump version number to ${VERSION}" --no-edit
 
 git push -u origin "$RELEASE_BRANCH"
-gh pr create --base master --title "Release $VERSION" --draft
+gh pr create --base master --fill --title "Release $VERSION" --body "$JIRA_TICKETS"
+gh release create "$VERSION" --draft --title "Release $VERSION" --notes "[${JIRA_RELEASE_LINK}](${JIRA_RELEASE_LINK})"
 
 git switch development
