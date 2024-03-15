@@ -42,17 +42,3 @@ git push -u origin "$RELEASE_BRANCH"
 gh pr create --base master --title "Release $VERSION" --draft
 
 git switch development
-
-pushd ../flood-service
-
-git switch development
-git pull
-git switch -c $RELEASE_BRANCH 
-npm version --no-git-tag-version $VERSION
-git add package.json package-lock.json
-git commit -m "Bump version number to ${VERSION}" --no-edit
-git push -u origin "$RELEASE_BRANCH"
-gh pr create --base master --title "Release $VERSION" --draft
-git switch development
-
-popd
