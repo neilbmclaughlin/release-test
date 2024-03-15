@@ -1,0 +1,23 @@
+#!/bin/bash
+
+VERSION=$1
+RELEASE_BRANCH="release/$VERSION"
+RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.txt"
+
+git pull origin $RELEASE_BRANCH:$RELEASE_BRANCH
+git pull origin development:development
+git pull origin master:master
+
+git switch master
+
+git merge --ff-only $RELEASE_BRANCH
+git push
+git tag -a $VERSION -m 'Release $VERSION'
+git push --tags $VERSION
+
+gh release create --verify-tag -F $RELEASE_NOTES_FILE --title "Release $VERSION"
+
+git switch development
+git merge --ff-only $RELEASE_BRANCH
+git push
+
