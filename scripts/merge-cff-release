@@ -6,20 +6,19 @@ VERSION=$1
 RELEASE_BRANCH="release/$VERSION"
 RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.txt"
 
-git pull origin $RELEASE_BRANCH:$RELEASE_BRANCH
-git pull origin development:development
-git pull origin master:master
+git switch $RELEASE_BRANCH
+git pull
 
 git switch master
-
+git pull
 git merge --ff-only $RELEASE_BRANCH
 git push
 git tag -a $VERSION -m 'Release $VERSION'
-git push --tags $VERSION
+git push --tags
 
 # gh release edit $VERSION --draft=false
 
 git switch development
+git pull
 git merge --ff-only $RELEASE_BRANCH
 git push
-
