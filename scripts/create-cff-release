@@ -32,6 +32,6 @@ git commit -m "Add release notes and bump version number to ${VERSION}" --no-edi
 
 git push -u origin "$RELEASE_BRANCH"
 gh pr create --base master --fill --title "Release $VERSION" --body "$JIRA_TICKETS"
-gh release create "$VERSION" --draft --title "Release $VERSION"
+gh release create "$VERSION" --draft --title "Release $VERSION" --notes "Refer to $RELEASE_NOTES_FILE for release notes"
 
 git switch development

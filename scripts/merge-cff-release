@@ -16,7 +16,7 @@ git push
 git tag -a $VERSION -m 'Release $VERSION'
 git push --tags
 
-# gh release edit $VERSION --draft=false
+gh release edit $VERSION --draft=false --tag $VERSION --verify-tag --notes "[release notes](/$RELEASE_NOTES_FILE)"
 
 git switch development
 git pull
