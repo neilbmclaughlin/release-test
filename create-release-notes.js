@@ -2,9 +2,6 @@ const fs = require('fs')
 const mustache = require('mustache')
 const yargs = require('yargs')
 
-// Load the template from file
-const templateStr = fs.readFileSync('release-docs/template.txt', 'utf8')
-
 const options = yargs
     .option('f', {
         alias: 'file',
@@ -36,8 +33,15 @@ const options = yargs
         demandOption: true,
         type: 'string'
     })
+     .option('t', {
+        alias: 'template',
+        describe: 'Template file',
+        demandOption: true,
+        type: 'string'
+    })
     .argv
 
+const templateStr = fs.readFileSync(options.template, 'utf8')
 const commitList = fs.readFileSync(options.file, 'utf8')
 const tickets = commitList.split('\n').filter(c => c.trim() !== '')
 
