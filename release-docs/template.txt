@@ -1,12 +1,14 @@
 # Check For Flooding Release
 
-Version: {version}
-Proposed Release Date: {date} 
-Jira Release Overview: {releaselink}
+Version: {{ version }}
+Proposed Release Date: {{ date }} 
+Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/{{ id }}/tab/release-report-all-issues
 
 # Tickets
 
-{ticketlist}
+{{#tickets}}
+- {{ . }}
+{{/tickets}}
 
 # Instructions
 
