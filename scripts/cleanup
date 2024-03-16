@@ -1,0 +1,24 @@
+git push origin --delete 8.1.0
+git tag -d 8.1.0
+git branch -D release/8.1.0
+git push -d origin release/8.1.0
+
+git --no-pager hist master development 
+
+echo "\nhash for master reset:"
+read master 
+
+git switch master
+git reset --hard $master
+git push --force-with-lease
+
+echo "\nhash for development reset:"
+read development 
+
+git switch development
+git reset --hard $development
+git push --force-with-lease
+
+gh release delete 8.1.0 --yes  
+
+
