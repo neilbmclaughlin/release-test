@@ -1,16 +1,16 @@
 # Check For Flooding Release
 
-Version: {{ version }}
-Proposed Release Date: {{ date }} 
-Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/{{ id }}/tab/release-report-all-issues
+* Version: {{ version }}
+* Proposed Release Date: {{ date }}
+* Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/{{ id }}/tab/release-report-all-issues
 
-# Tickets
+## Tickets
 
 {{#tickets}}
 - {{ . }}
 {{/tickets}}
 
-# Instructions
+## Instructions
 
 # renumber and delete as appropriate
 1 - Execute LFW_{STAGE}_02_UPDATE_DATABASE

@@ -7,7 +7,7 @@ RELEASE_DATE=$2
 JIRA_RELEASE_ID=$3
 
 RELEASE_BRANCH="release/$VERSION"
-RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.txt"
+RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.md"
 
 git switch development
 git pull
