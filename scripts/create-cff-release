@@ -2,22 +2,30 @@
 
 set -e
 
-VERSION=$1
-RELEASE_DATE=$2
+SEMANTIC_VERSION_INCREMENT=$1
+FORMATTED_RELEASE_DATE=$(date -j -f "%d/%m/%Y" "$2" +"%A %d %B %Y")
 JIRA_RELEASE_ID=$3
-
-RELEASE_BRANCH="release/$VERSION"
-RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.md"
 
 git switch development
 git pull
+npm version --no-git-tag-version $SEMANTIC_VERSION_INCREMENT
+
+VERSION=$(jq -r '.version' package.json)
+RELEASE_BRANCH="release/$VERSION"
+RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.md"
+
+echo "Creating release $VERSION with branch $RELEASE_BRANCH and proposed release date of $FORMATTED_RELEASE_DATE"
+echo "Hit return to continue"
+
+read
+
 git switch -c $RELEASE_BRANCH 
-npm version --no-git-tag-version $VERSION
 
 TEMP_FILE=$(mktemp)
 git show ${RELEASE_BRANCH}...master --oneline --no-patch --pretty=%s -10 | grep -e '^FSR-' > $TEMP_FILE
 
-npm run create-release-notes -- --file $TEMP_FILE --date "$RELEASE_DATE" --release "$VERSION" --output $RELEASE_NOTES_FILE --id $JIRA_RELEASE_ID --template 'release-docs/template.md'
+
+npm run create-release-notes -- --file $TEMP_FILE --date "$FORMATTED_RELEASE_DATE" --release "$VERSION" --output $RELEASE_NOTES_FILE --id $JIRA_RELEASE_ID --template 'release-docs/template.md'
 
 "${EDITOR:-vi}" "$RELEASE_NOTES_FILE"
 
@@ -35,3 +43,6 @@ gh pr create --base master --fill --title "Release $VERSION" --body "$JIRA_TICKE
 gh release create "$VERSION" --draft --title "Release $VERSION" --notes "Refer to $RELEASE_NOTES_FILE for release notes"
 
 git switch development
+
+
+echo "Release $VERSION created with branch $RELEASE_BRANCH and proposed release date of $FORMATTED_RELEASE_DATE"
