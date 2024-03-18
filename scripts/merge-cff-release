@@ -6,6 +6,10 @@ VERSION=$1
 RELEASE_BRANCH="release/$VERSION"
 RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.md"
 
+echo "Merging branch $RELEASE_BRANCH into master and development and publishing release $VERSION"
+echo "Hit return to continue"
+read
+
 git switch $RELEASE_BRANCH
 git pull
 
