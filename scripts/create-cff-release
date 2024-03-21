@@ -14,8 +14,17 @@ SEMANTIC_VERSION_INCREMENT=$1
 FORMATTED_RELEASE_DATE=$(date -j -f "%d/%m/%Y" "$2" +"%A %d %B %Y")
 JIRA_RELEASE_ID=$3
 
+git switch master
+git pull
+
 git switch development
 git pull
+
+if ! git log --oneline master..development  | grep -q .; then
+  echo "Quitting as there are no changes between development and master"
+  exit 1
+fi
+
 npm version --no-git-tag-version $SEMANTIC_VERSION_INCREMENT
 
 VERSION=$(jq -r '.version' package.json)
