@@ -40,7 +40,7 @@ VERSION=$(jq -r '.version' package.json)
 RELEASE_BRANCH="release/$VERSION"
 RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.md"
 
-echo "Creating release $VERSION with branch $RELEASE_BRANCH and proposed release date of $FORMATTED_RELEASE_DATE"
+echo "Creating release $VERSION with branch $RELEASE_BRANCH from $REF and proposed release date of $FORMATTED_RELEASE_DATE"
 echo "Hit return to continue or  ctrl-c to quit"
 
 read
