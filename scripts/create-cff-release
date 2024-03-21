@@ -3,16 +3,18 @@
 set -e
 
 # Check if correct number of arguments are provided
-if [ $# -ne 3 ]; then
-  echo "Usage: create-cff-release { major|minor|patch } {proposed release date (dd/mm/yyyy)} {jira release id )"
+if [ $# -ne 4 ]; then
+  echo "Usage: create-cff-release { major|minor|patch } {proposed release date (dd/mm/yyyy)} {jira release id ) [start commit]"
   echo "example: create-cff-release minor 01/04/2024 16838"
-  echo "note - the jira id is from the URL in the list here https://eaflood.atlassian.net/projects/FSR?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page"
+  echo "note 1 - the jira id is from the URL in the list here https://eaflood.atlassian.net/projects/FSR?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page"
+  echo "note 2 - use a start commit to create the release branch from a commit other than the head of the development branch"
   exit 1
 fi
 
 SEMANTIC_VERSION_INCREMENT=$1
 FORMATTED_RELEASE_DATE=$(date -j -f "%d/%m/%Y" "$2" +"%A %d %B %Y")
 JIRA_RELEASE_ID=$3
+COMMIT=$4
 
 git switch master
 git pull
@@ -20,8 +22,15 @@ git pull
 git switch development
 git pull
 
-if ! git log --oneline master..development  | grep -q .; then
-  echo "Quitting as there are no changes between development and master"
+if [ -n $COMMIT ] && ! git log development | grep -q $COMMIT ; then
+  echo "The development branch does not contain the commit $COMMIT"
+  exit 1
+fi
+
+REF="${COMMIT:-development}"
+
+if ! git log --oneline master..$REF | grep -q .; then
+  echo "Quitting as there are no changes between $REF and master"
   exit 1
 fi
 
@@ -36,7 +45,7 @@ echo "Hit return to continue or  ctrl-c to quit"
 
 read
 
-git switch -c $RELEASE_BRANCH 
+git switch -c $RELEASE_BRANCH $COMMIT
 
 TEMP_FILE=$(mktemp)
 git show ${RELEASE_BRANCH}...master --oneline --no-patch --pretty=%s -10 | grep -e '^FSR-' > $TEMP_FILE
