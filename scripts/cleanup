@@ -3,21 +3,14 @@ git tag -d v8.1.0
 git branch -D release/8.1.0
 git push -d origin release/8.1.0
 
-git --no-pager log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
- master development 
-
-echo "\nhash for master reset:"
-read master 
-
 git switch master
-git reset --hard $master
+# reset to the parent of the FSR-100 commit (this should be the last script change)
+git reset --hard $(git log --grep FSR-100 --format="%P" development)
 git push --force-with-lease
-
-echo "\nhash for development reset:"
-read development 
 
 git switch development
-git reset --hard $development
+# reset to the FSR-100 commit
+git reset --hard $(git log --grep FSR-100 --format="%H" development) 
 git push --force-with-lease
 
-gh release delete v8.1.0 --yes  
+gh release delete v8.1.0 --yes
