@@ -18,7 +18,7 @@ RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.md"
 TAG_VERSION="v$VERSION"
 
 echo "Merging branch $RELEASE_BRANCH into master and development and publishing release $VERSION"
-echo "Hit return to continue"
+echo "Hit return to continue or  ctrl-c to quit"
 read
 
 git switch $RELEASE_BRANCH
