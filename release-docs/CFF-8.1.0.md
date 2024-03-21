@@ -1,7 +1,7 @@
 # Check For Flooding Release
 
 * Version: 8.1.0
-* Proposed Release Date: Monday 01 April 2024
+* Proposed Release Date: Tuesday 02 April 2024
 * Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/16838/tab/release-report-all-issues
 
 ## Tickets
