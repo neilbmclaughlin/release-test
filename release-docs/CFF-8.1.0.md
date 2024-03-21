@@ -7,6 +7,7 @@
 ## Tickets
 
 - FSR-100 | Bug | Added missing comment
+- FSR-000 | Bug | Fixed typo
 
 ## Instructions
 

@@ -1,2 +1,2 @@
 // a very important comment
-console.log('Hello World!')
+console.log('Hello World')
