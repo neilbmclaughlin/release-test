@@ -3,7 +3,7 @@
 set -e
 
 # Check if correct number of arguments are provided
-if [ $# -ne 4 ]; then
+if [ $# -le 3 ]; then
   echo "Usage: create-cff-release { major|minor|patch } {proposed release date (dd/mm/yyyy)} {jira release id ) [start commit]"
   echo "example: create-cff-release minor 01/04/2024 16838"
   echo "note 1 - the jira id is from the URL in the list here https://eaflood.atlassian.net/projects/FSR?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page"
