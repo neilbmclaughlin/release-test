@@ -22,7 +22,7 @@ git pull
 git switch development
 git pull
 
-if [ -n $COMMIT ] && ! git log development | grep -q $COMMIT ; then
+if [ -n "$COMMIT" ] && ! git log development | grep -q "$COMMIT" ; then
   echo "The development branch does not contain the commit $COMMIT"
   exit 1
 fi
