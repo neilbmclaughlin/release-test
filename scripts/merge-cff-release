@@ -2,9 +2,20 @@
 
 set -e
 
+# Check if correct number of arguments are provided
+if [ $# -ne 1 ]; then
+  echo "Usage: merge-cff-release {version}"
+  echo "example: merge-cff-release 8.1.0"
+  exit 1
+fi
+
+# Rest of the script goes here
+
+
 VERSION=$1
 RELEASE_BRANCH="release/$VERSION"
 RELEASE_NOTES_FILE="./release-docs/CFF-${VERSION}.md"
+TAG_VERSION="v$VERSION"
 
 echo "Merging branch $RELEASE_BRANCH into master and development and publishing release $VERSION"
 echo "Hit return to continue"
@@ -17,10 +28,10 @@ git switch master
 git pull
 git merge --ff-only $RELEASE_BRANCH
 git push
-git tag -a $VERSION -m 'Release $VERSION'
+git tag -a $TAG_VERSION -m 'Release $VERSION'
 git push --tags
 
-gh release edit $VERSION --draft=false --tag $VERSION --verify-tag --notes "[release notes](/$RELEASE_NOTES_FILE)"
+gh release edit $VERSION --draft=false --tag $TAG_VERSION --verify-tag --notes "[release notes](/$RELEASE_NOTES_FILE)"
 
 git switch development
 git pull
