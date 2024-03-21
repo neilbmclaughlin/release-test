@@ -3,7 +3,8 @@ git tag -d v8.1.0
 git branch -D release/8.1.0
 git push -d origin release/8.1.0
 
-git --no-pager hist master development 
+git --no-pager log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+ master development 
 
 echo "\nhash for master reset:"
 read master 

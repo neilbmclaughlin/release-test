@@ -12,7 +12,7 @@ if [ $# -lt 3 ]; then
 fi
 
 SEMANTIC_VERSION_INCREMENT=$1
-FORMATTED_RELEASE_DATE=$(date -j -f "%d/%m/%Y" "$2" +"%A %d %B %Y")
+FORMATTED_RELEASE_DATE=$2
 JIRA_RELEASE_ID=$3
 COMMIT=$4
 
