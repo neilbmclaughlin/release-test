@@ -1,0 +1,49 @@
+name: Create Release Branch and Draft Pull Request
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  create_release_branch_and_draft_pr:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Determine version increment
+        id: get_version_increment
+        run: |
+          echo "::set-output name=increment::$INPUT_INCREMENT"
+        env:
+          INPUT_INCREMENT: ${{ github.event.inputs.increment }}
+          
+      - name: Bump version
+        run: npm version ${{ steps.get_version_increment.outputs.increment }}
+        
+      - name: Get current version
+        id: get_current_version
+        run: |
+          echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+          
+      - name: Create release branch
+        run: |
+          branch_name="release/${{ steps.get_current_version.outputs.version }}"
+          git switch -c $branch_name
+          git push origin $branch_name
+          
+      - name: Create draft pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Draft PR: Merge release branch into master"
+          branch: ${{ steps.get_current_version.outputs.version }}
+          base: master
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
