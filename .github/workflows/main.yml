@@ -50,10 +50,10 @@ jobs:
           git commit -m 'Bump version number (${{ steps.get_current_version.outputs.version }})'
           git push origin $branch_name
 
-      - name: Create PR
+      - name: Create Draft PRs
         run: |
-          gh pr create --base master --fill --title "Release ${{ steps.get_current_version.outputs.version }}"
-          gh pr create --base development --fill --title "Release ${{ steps.get_current_version.outputs.version }}"
+          gh pr create --base master --fill --title "Release ${{ steps.get_current_version.outputs.version }}" --body "TBC"
+          gh pr create --base development --fill --title "Release ${{ steps.get_current_version.outputs.version }}"  --body "TBC"
           # gh release create "${{ steps.get_current_version.outputs.version }}" --draft --title "Release ${{ steps.get_current_version.outputs.version }}" --notes "Refer to ./release-docs/CFF-${{ steps.get_current_version.outputs.version }}.md for release notes"
         env:
           GH_TOKEN: ${{ github.token }}
