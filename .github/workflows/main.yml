@@ -33,7 +33,7 @@ jobs:
       - name: Node Version Bumpr
         uses: PackagrIO/action-bumpr-node@v0.0.1
         with:
-          version_bump_type: ${{ github.event.inputs.increment }}"
+          version_bump_type: ${{ github.event.inputs.increment }}
                   
       - name: Get current version
         id: get_current_version
