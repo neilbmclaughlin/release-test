@@ -49,4 +49,9 @@ jobs:
           git add .
           git commit -m 'Bump version number (${{ steps.get_current_version.outputs.version }})'
           git push origin $branch_name
+
+      - name: Create PR
+        run: |
           gh pr list
+        env:
+          GH_TOKEN: ${{ github.token }}
