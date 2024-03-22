@@ -36,12 +36,3 @@ jobs:
           branch_name="release/${{ steps.get_current_version.outputs.version }}"
           git switch -c $branch_name development
           git push origin $branch_name
-          
-      - name: Create draft pull request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: "Draft PR: Merge release branch into master"
-          branch: ${{ steps.get_current_version.outputs.version }}
-          base: master
-          draft: true
-          token: ${{ secrets.GITHUB_TOKEN }}
