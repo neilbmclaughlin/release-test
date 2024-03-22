@@ -34,7 +34,7 @@ jobs:
       - name: Create release branch
         run: |
           branch_name="release/${{ steps.get_current_version.outputs.version }}"
-          git switch -c $branch_name
+          git switch -c $branch_name development
           git push origin $branch_name
           
       - name: Create draft pull request
