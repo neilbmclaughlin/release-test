@@ -2,7 +2,15 @@ name: Create Release Branch and Draft Pull Request
 
 on:
   workflow_dispatch:
-  
+    inputs:
+      increment:
+        type: choice
+        description: Release increment
+        options: 
+        - major
+        - minor
+        - patch
+        
 jobs:
   create_release_branch_and_draft_pr:
     runs-on: ubuntu-latest
@@ -25,7 +33,7 @@ jobs:
       - name: Node Version Bumpr
         uses: PackagrIO/action-bumpr-node@v0.0.1
         with:
-          version_bump_type: minor
+          version_bump_type: ${{ github.event.inputs.increment }}"
                   
       - name: Get current version
         id: get_current_version
@@ -39,5 +47,5 @@ jobs:
           branch_name="release/${{ steps.get_current_version.outputs.version }}"
           git switch -c $branch_name
           git add .
-          git commit -m 'Bump version number'
+          git commit -m 'Bump version number (${{ steps.get_current_version.outputs.version }})'
           git push origin $branch_name
