@@ -52,6 +52,8 @@ jobs:
 
       - name: Create PR
         run: |
-          gh pr list
+          gh pr create --base master --fill --title "Release ${{ steps.get_current_version.outputs.version }}"
+          gh pr create --base development --fill --title "Release ${{ steps.get_current_version.outputs.version }}"
+          # gh release create "${{ steps.get_current_version.outputs.version }}" --draft --title "Release ${{ steps.get_current_version.outputs.version }}" --notes "Refer to ./release-docs/CFF-${{ steps.get_current_version.outputs.version }}.md for release notes"
         env:
           GH_TOKEN: ${{ github.token }}
