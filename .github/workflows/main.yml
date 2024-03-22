@@ -38,23 +38,23 @@ jobs:
       - name: Get current version
         id: get_current_version
         run: |
-          echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+          echo "VERSION=$(node -e 'console.log(require("./package.json").version)')" >> "$GITHUB_ENV"
           
       - name: Create release branch
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          branch_name="release/${{ steps.get_current_version.outputs.version }}"
+          branch_name="release/$VERSION"
           git switch -c $branch_name
           git add .
-          git commit -m 'Bump version number (${{ steps.get_current_version.outputs.version }})'
+          git commit -m 'Bump version number ($VERSION)'
           git push origin $branch_name
 
       - name: Create Draft PRs
         run: |
           git fetch origin master
-          gh pr create --base master --title "Release ${{ steps.get_current_version.outputs.version }}" --body "TBC"
-          gh pr create --base development --title "Release ${{ steps.get_current_version.outputs.version }}"  --body "TBC"
+          gh pr create --base master --title "Release $VERSION" --body "TBC"
+          gh pr create --base development --title "Release $VERSION"  --body "TBC"
           # gh release create "${{ steps.get_current_version.outputs.version }}" --draft --title "Release ${{ steps.get_current_version.outputs.version }}" --notes "Refer to ./release-docs/CFF-${{ steps.get_current_version.outputs.version }}.md for release notes"
         env:
           GH_TOKEN: ${{ github.token }}
