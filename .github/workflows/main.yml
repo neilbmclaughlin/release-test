@@ -81,3 +81,6 @@ jobs:
           # gh release create "${{ steps.get_current_version.outputs.version }}" --draft --title "Release ${{ steps.get_current_version.outputs.version }}" --notes "Refer to ./release-docs/CFF-${{ steps.get_current_version.outputs.version }}.md for release notes"
         env:
           GH_TOKEN: ${{ github.token }}
+
+      - name: Run next workflow
+        run: gh workflow run --repo neilbmclaughlin/release-test-2 90865562 -f name="Release $VERSION" 
