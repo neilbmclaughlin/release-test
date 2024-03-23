@@ -72,11 +72,12 @@ jobs:
           git add $release_notes_file
           git commit -m "Add release notes"
           git push origin $RELEASE_BRANCH
+          echo RELEASE_NOTES_FILE=$release_notes_file >> "$GITHUB_ENV"
 
       - name: Create Draft PRs
         run: |
-          gh pr create --base master --title "Release $VERSION" --body "TBC"
-          gh pr create --base development --title "Release $VERSION"  --body "TBC"
+          gh pr create --base master --title "Release $VERSION" --body "$RELEASE_NOTES_FILE"
+          gh pr create --base development --title "Release $VERSION"  --body "$RELEASE_NOTES_FILE"
           # gh release create "${{ steps.get_current_version.outputs.version }}" --draft --title "Release ${{ steps.get_current_version.outputs.version }}" --notes "Refer to ./release-docs/CFF-${{ steps.get_current_version.outputs.version }}.md for release notes"
         env:
           GH_TOKEN: ${{ github.token }}
