@@ -54,6 +54,12 @@ const options = yargs
         demandOption: true,
         type: 'string'
     })
+    .option('c', {
+        alias: 'dbChanges',
+        describe: 'Include database changes',
+        type: 'boolean',
+        default: false
+    })
     .argv
 
 const templateStr = fs.readFileSync(options.template, 'utf8')
@@ -64,6 +70,7 @@ const context = {
     version: options.release,
     date: formatDate(options.date),
     id: options.id,
+    dbChanges: options.dbChanges,
     tickets
 }
 
