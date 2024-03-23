@@ -85,4 +85,5 @@ jobs:
       - name: Run next workflow
         run: gh workflow run --repo neilbmclaughlin/release-test-2 90865562 -f name="Release $VERSION" 
         env:
-          GH_TOKEN: ${{ github.token }}
+          # use PAT token with repo scope (github.token didn't work)
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
