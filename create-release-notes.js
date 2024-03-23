@@ -2,6 +2,21 @@ const fs = require('fs')
 const nunjucks = require('nunjucks')
 const yargs = require('yargs')
 
+function formatDate(inputDate) {
+  const [day, month, year] = inputDate.split('/').map(Number)
+
+  const dateObj = new Date(year, month - 1, day)
+
+  const options = {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }
+
+  return dateObj.toLocaleDateString('en-GB', options)
+}
+
 const options = yargs
     .option('f', {
         alias: 'file',
@@ -47,7 +62,7 @@ const tickets = commitList.split('\n').filter(c => c.trim() !== '')
 
 const context = {
     version: options.release,
-    date: options.date,
+    date: formatDate(options.date),
     id: options.id,
     tickets
 }

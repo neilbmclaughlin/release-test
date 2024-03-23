@@ -8,7 +8,7 @@ on:
         description: id of release in Jira
       proposed_release_date:
         type: string
-        description: Proposed release date
+        description: Proposed release date (dd/mm/yyyy)
       increment:
         type: choice
         description: Release increment
