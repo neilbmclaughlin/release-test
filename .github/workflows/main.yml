@@ -37,14 +37,9 @@ jobs:
       - name: Install dependencies
         run: npm install
         
-      - name: Node Version Bumpr
-        uses: PackagrIO/action-bumpr-node@v0.0.1
-        with:
-          version_bump_type: ${{ github.event.inputs.increment }}
-                  
-      - name: Get current version
-        id: get_current_version
+      - name: Bump version
         run: |
+          npm version --no-git-tag-version ${{ github.event.inputs.increment }}
           version=$(jq -r '.version' package.json)
           echo VERSION=$version >> "$GITHUB_ENV"
           echo RELEASE_BRANCH="release/$version" >> "$GITHUB_ENV"
