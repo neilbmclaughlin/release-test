@@ -53,7 +53,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git switch -c $RELEASE_BRANCH
           git add .
-          git commit -m 'Bump version number ($VERSION)'
+          git commit -m 'Bump version number (${VERSION})'
           git push origin $RELEASE_BRANCH
 
       - name: Create release notes
