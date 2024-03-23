@@ -1,4 +1,4 @@
-name: Create Release Branch and Draft Pull Request
+name: Create Release Branch and Pull Requests
 
 on:
   workflow_dispatch:
