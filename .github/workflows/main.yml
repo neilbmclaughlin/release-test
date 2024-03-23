@@ -58,7 +58,7 @@ jobs:
           release_notes_file="release-docs/CFF-${VERSION}.md"
           temp_file=$(mktemp)
           git log --oneline --pretty=%s origin/master...$RELEASE_BRANCH --grep '^FSR-' > $temp_file
-          npm run create-release-notes -- --file $temp_file --date "${{ github.event.inputs.proposed_release_date }}" --release "$VERSION" --output $release_notes_file  --id "${{ github.event.inputs.jira_release_id }}" --template "release-docs/template.md"
+          npm run create-release-notes -- --file $temp_file --date "${{ github.event.inputs.proposed_release_date }}" --release "$VERSION" --output $release_notes_file  --id "${{ github.event.inputs.jira_release_id }}" --template "release-docs/template.njk"
           git add $release_notes_file
           git commit -m "Add release notes"
           git push origin $RELEASE_BRANCH

@@ -1,5 +1,5 @@
 const fs = require('fs')
-const mustache = require('mustache')
+const nunjucks = require('nunjucks')
 const yargs = require('yargs')
 
 const options = yargs
@@ -52,6 +52,6 @@ const context = {
     tickets
 }
 
-const outputStr = mustache.render(templateStr, context)
+const outputStr = nunjucks.renderString(templateStr, context)
 
 fs.writeFileSync(options.output, outputStr)

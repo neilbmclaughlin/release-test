@@ -6,9 +6,9 @@
 
 ## Tickets
 
-{{#tickets}}
-- {{ . }}
-{{/tickets}}
+{% for ticket in tickets %}
+- {{ ticket }}
+{% endfor %}
 
 ## Instructions
 
