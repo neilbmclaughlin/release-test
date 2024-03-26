@@ -7,5 +7,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: test
-      run: echo "$GITHUB_REPOSITORY_OWNER/flood-service"
+
+      - name: Coditional test
+        run: |
+          merge_status='DIRTY'
+          OVERRIDE=false
+
+          if [[ "$merge_status" != 'CLEAN' ]] ; then
+            echo " =========== 1"
+            exit 1
+          fi
+
+          if [[ "$merge_status" != 'CLEAN' ]] && ! "$OVERRIDE" ; then
+            echo " =========== 2"
+            exit 1
+          fi
